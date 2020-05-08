@@ -1,3 +1,4 @@
+//コントローラ IndexServlet データベースから複数のメッセージ情報を取得して一覧表示するサーブレット
 package controllers;
 
 import java.io.IOException;
@@ -43,6 +44,13 @@ public class IndexServlet extends HttpServlet {
 
 
 		request.setAttribute("messages", messages);
+
+		//フラッシュメッセージがセッションスコープにセットされていたら
+		//リクエストスコープに保存する（セッションスコープから削除）
+		if(request.getSession().getAttribute("flush") != null){
+		    request.setAttribute("flush", request.getSession().getAttribute("flush"));
+		    request.getSession().removeAttribute("flush");
+		}
 
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/messages/index.jsp");

@@ -8,6 +8,6 @@
             <c:import url="_form.jsp" />
         </form>
 
-        <p><a href="${pageContext.request.contextPath}/index"></a>
+        <p><a href="${pageContext.request.contextPath}/index">一覧に戻る</a>
     </c:param>
 </c:import>

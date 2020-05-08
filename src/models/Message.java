@@ -1,3 +1,4 @@
+//データベースと各カラムに対応した変数をもつクラス DTO それぞれのカラムの意味
 package models;
 
 import java.sql.Timestamp;
@@ -12,18 +13,18 @@ import javax.persistence.Table;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@Entity
+@Entity //オブジェクトへ保存されたりデータベースから読み込まれたりしますよという意味
 @NamedQueries({
-    @NamedQuery(
+    @NamedQuery(//JPQLを用意する 詳しくはメモ参照
     name = "getAllMessages",
-    query = "SELECT m FROM Message AS m ORDER BY m.id DESC"
+    query = "SELECT m FROM Message AS m ORDER BY m.id DESC" //JPQLを呼びだす
     )
 })
-@Table(name = "messages")
+@Table(name = "messages") //データベースのメッセージを利用しますよという意味
 public class Message {
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id") //@Column データベース上とのマッピングを指定するアノテーション
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//@GeneratedValue主キーの生成 MySQLにはカラムの属性にAUTO_INCREMENT PRIMARY KEY
     private Integer id;
 
     @Column(name = "title", length = 255, nullable = false)

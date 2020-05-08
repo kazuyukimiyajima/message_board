@@ -1,4 +1,4 @@
-package util;
+package util; //廃バーネートに接続するためのまじない DAO
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
