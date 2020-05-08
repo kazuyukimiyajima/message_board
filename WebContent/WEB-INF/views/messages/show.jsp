@@ -5,8 +5,8 @@
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
-
-
+        <c:choose>
+        <c:when test="${message != null}">
         <h2>id : ${message.id}のメッセージ詳細ページ</h2>
             <!-- html文章に引数を呼びだすもの -->
 
@@ -18,5 +18,10 @@
         <p><a href="${pageContext.request.contextPath}/index">一覧にもどる</a></p>
         <p><a href="${pageContext.request.contextPath}/edit?id=${message.id}">このメッセージを編集する</a></p>
         <!-- editへのリンク貼り付け このメッセージを編集する -->
+        </c:when>
+        <c:otherwise>
+            <h2>お探しのデータは見つかりませんでした。</h2>
+        </c:otherwise>
+        </c:choose>
     </c:param>
 </c:import>
