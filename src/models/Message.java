@@ -18,7 +18,11 @@ import javax.persistence.NamedQuery;
     @NamedQuery(//JPQLを用意する 詳しくはメモ参照
     name = "getAllMessages",
     query = "SELECT m FROM Message AS m ORDER BY m.id DESC" //JPQLを呼びだす
-    )
+    ),
+    @NamedQuery(
+            name = "getMessagesCount",
+            query = "SELECT COUNT(m) FROM Message AS m"//データベースに何件のメッセージデータが入っているか
+            )
 })
 @Table(name = "messages") //データベースのメッセージを利用しますよという意味
 public class Message {
