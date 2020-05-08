@@ -36,9 +36,9 @@ public class ShowServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EntityManager em = DBUtil.createEntityManager();
 
-		//該当のIDメッセージ１件のみをデータベースから取得
+		//該当のIDメッセージ１件のみをデータベースから取得   request.getParameter()←クエリパラメータの取得 どのデータもSting型で取得する
 		Message m = em.find(Message.class, Integer.parseInt(request.getParameter("id")));
-
+                                           //↑Interger.parseInt() String型の１を整数の１に変える役割
 		em.close();
 
 		//メッセージデータをリクエストスコープにセットしてshow.jspを呼びだす
