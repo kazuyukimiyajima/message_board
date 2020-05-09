@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Message;
+import models.validators.MessageValidator;
 import util.DBUtil;
+
+import java.util.List;
 
 /**
  * Servlet implementation class CreateServlet
@@ -50,7 +54,21 @@ public class CreateServlet extends HttpServlet {
 	        m.setCreated_at(currentTime);
 	        m.setUpdated_at(currentTime);
 
-	        //
+	        //バリデーションを実行してエラーがあったら新規登録のフォームに戻る
+	        List<String>errors = MessageValidator.validate(m);
+	        if(errors.size() > 0){
+	            em.close();
+
+	            //フォームに初期値を設定、さらにエラーメッセージを送る、リクエストスコープへ格納
+	            request.setAttribute("_token", request.getSession().getId());
+	            request.setAttribute("message", m);
+	            request.setAttribute("errors", errors);
+
+	            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/messages/new.jsp");
+	            rd.forward(request, response);
+	        }else{
+
+	            //結果それ以外をデータベースに保存
 	        em.getTransaction().begin();
 	        em.persist(m);
 	        em.getTransaction().commit();
@@ -58,6 +76,7 @@ public class CreateServlet extends HttpServlet {
 	        em.close();
 
 	        response.sendRedirect(request.getContextPath() + "/index");
+	        }
 	}
 	}
 }
